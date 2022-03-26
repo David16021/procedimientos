@@ -1,4 +1,4 @@
-drop database modelonotas7;
+#drop database modelonotas7;
 create database modelonotas7;
 use modelonotas7;
 CREATE TABLE Docentes (
@@ -18,9 +18,11 @@ generoestudiante VARCHAR(15) NOT NULL
 
 CREATE TABLE Materias (
 codigomateria varchar(20) PRIMARY KEY,
-nombremateria VARCHAR(30) NOT NULL,
+nombremateria varchar(30) NOT NULL,
 creditosmateria integer NOT NULL
 );
+
+insert into Materias (codigomateria, nombremateria, creditosmateria) values ("1234", "Holita", 3);
 
 CREATE TABLE Notas (
 consecutivonota bigint AUTO_INCREMENT primary key,
@@ -39,4 +41,205 @@ insert into docentes (ceduladocente,nombresdocente,apellidosdocente,emaildocente
 insert into docentes (ceduladocente,nombresdocente,apellidosdocente,emaildocente) values (987654,'Ana Rosa ','Pulido Serna','anarosa@libertadores.edu.co' );
 
 insert into docentes (ceduladocente,nombresdocente,apellidosdocente,emaildocente) values (123654,'Oscar Julian ','Almanza','almanza@libertadores.edu.co' );
+
+#procedimiento de insertar docente
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_docentes`(
+ IN _ceduladocente bigint,
+ IN _nombresdocente varchar(30),
+ IN _apellidosdocente varchar(30),
+ IN _emaildocente varchar(30)
+)
+BEGIN
+  insert into docentes(ceduladocente,nombresdocente,apellidosdocente,emaildocente) 
+  values (_ceduladocente,_nombresdocente,_apellidosdocente,_emaildocente);
+
+END$$
+DELIMITER ;
+
+#procedimiento de seleccionar docente
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `select_docentes`(
+)
+BEGIN
+SELECT ceduladocente,nombresdocente,apellidosdocente,emaildocente FROM docentes;	
+END$$
+DELIMITER ;
+
+#procedimiento de seleccionar docente2
+
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `select2_docentes`(
+ IN _ceduladocente bigint
+)
+BEGIN
+SELECT ceduladocente,nombresdocente,apellidosdocente,emaildocente FROM docentes where ceduladocente=_ceduladocente;	
+END$$
+DELIMITER ;
+
+#procedimiento de actualizar docente
+
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_docentes`(
+ IN _ceduladocente bigint,
+ IN _nombresdocente varchar(30),
+ IN _apellidosdocente varchar(30),
+ IN _emaildocente varchar(30)
+)
+BEGIN
+ update docentes set nombresdocente = _nombresdocente,apellidosdocente=_apellidosdocente,emaildocente=_emaildocente where ceduladocente=_ceduladocente;
+END$$
+DELIMITER ;
+
+
+
+#procedimiento de insertar materia
+
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_materias`(
+ IN _codigomateria varchar(20),
+ IN _nombremateria varchar(30),
+ IN _creditosmateria integer
+)
+BEGIN
+  insert into Materias(codigomateria,nombremateria,creditosmateria) 
+  values (_codigomateria,_nombremateria,_creditosmateria);
+
+END$$
+DELIMITER ;
+
+##Consultar materias
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `select_materias`(
+)
+BEGIN
+SELECT codigomateria,nombremateria,creditosmateria FROM Materias;	
+END$$
+DELIMITER ;
+
+#
+#use modelonotas7;
+#DELIMITER $$
+#CREATE DEFINER=`root`@`localhost` PROCEDURE `select2_materias`(
+# IN _codigomateria bigint
+#)
+#BEGIN
+#SELECT codigomateria,nombremateria,creditosmateria FROM Materias where codigomateria=_codigomateria;	
+#END$$
+#DELIMITER ;
+
+use modelonotas7;
+
+###### INSERTAR ESTUDIANTES ######
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_estudiante`(
+ IN _codigoestudiante bigint,
+ IN _nombreestudiante varchar(30),
+ IN _apellidosestudiante varchar(30),
+ IN _fechanacimiento varchar(30),
+ IN _generoestudiante VARCHAR(15)
+)
+BEGIN
+  insert into estudiantes(codigoestudiante,nombreestudiante,apellidosestudiante,fechanacimiento,generoestudiante) 
+  values (_codigoestudiante,_nombreestudiante,_apellidosestudiante,_fechanacimiento,_generoestudiante);
+
+END$$
+DELIMITER ;
+
+
+####### CONSULTAR ESTUDIANTES #######
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `selec_estudiante`(
+)
+BEGIN
+SELECT codigoestudiante,nombreestudiante,apellidosestudiante,fechanacimiento,generoestudiante FROM estudiantes;	
+END$$
+DELIMITER ;
+
+
+
+###### SELECCIONAR ESTUDIANTES #######
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `select2_estudiante`(
+ IN _codigoestudiante bigint
+)
+BEGIN
+SELECT  codigoestudiante,nombreestudiante,apellidosestudiante,fechanacimiento,generoestudiante FROM estudiantes where codigoestudiante=_codigoestudiante;	
+END$$
+DELIMITER ;
+
+
+###### MODIFICAR ESTUDIANTE ###########
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_estudiante`(
+ IN _codigoestudiante bigint,
+ IN _nombreestudiante varchar(30),
+ IN _apellidosestudiante varchar(30),
+ IN _fechanacimiento varchar(30),
+ IN _generoestudiante VARCHAR(15)
+)
+BEGIN
+ update estudiantes set nombreestudiante = _nombreestudiante, apellidosestudiante = _apellidosestudiante, fechanacimiento=_fechanacimiento
+ ,generoestudiante = _generoestudiante  where codigoestudiante=_codigoestudiante;
+END$$
+DELIMITER ;
+
+
+######## ELIMINAR ESTUDIANTE #########
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminar_estudiante`(
+ IN _codigoestudiante bigint,
+ IN _nombreestudiante varchar(30),
+ IN _apellidosestudiante varchar(30),
+ IN _fechanacimiento varchar(30),
+ IN _generoestudiante VARCHAR(15)
+)
+BEGIN
+delete from estudiantes where codigoestudiante = _codigoestudiante;
+END$$
+DELIMITER ;
+
+###### INSERTAR NOTAS ######
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_nota`(
+ IN _consecutivonota bigint,
+ IN _estudiantenota bigint,
+ IN _materianota varchar(20),
+ IN _docentenota bigint,
+ IN _valornota float
+)
+BEGIN
+insert into notas values (_consecutivonota,_estudiantenota,_materianota,_docentenota,_valornota);
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_nota`(
+ IN _consecutivonota bigint,
+ IN _estudiantenota bigint,
+ IN _materianota varchar(20),
+ IN _docentenota bigint,
+ IN _valornota float
+)
+BEGIN
+update notas set   estudiantenota = _estudiantenota ,materianota = _materianota , docentenota = _docentenota,  valornota = _valornota
+where consecutivonota = _consecutivonota ;
+END$$
+DELIMITER ;
+
+
+
+
 
