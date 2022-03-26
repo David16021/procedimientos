@@ -1,0 +1,53 @@
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_docentes`(
+ IN _ceduladocente bigint,
+ IN _nombresdocente varchar(30),
+ IN _apellidosdocente varchar(30),
+ IN _emaildocente varchar(30)
+)
+BEGIN
+  insert into docentes(ceduladocente,nombresdocente,apellidosdocente,emaildocente) 
+  values (_ceduladocente,_nombresdocente,_apellidosdocente,_emaildocente);
+
+END$$
+DELIMITER ;
+
+
+
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `select_docentes`(
+)
+BEGIN
+SELECT ceduladocente,nombresdocente,apellidosdocente,emaildocente FROM docentes;	
+END$$
+DELIMITER ;
+
+
+
+
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `select2_docentes`(
+ IN _ceduladocente bigint
+)
+BEGIN
+SELECT ceduladocente,nombresdocente,apellidosdocente,emaildocente FROM docentes where ceduladocente=_ceduladocente;	
+END$$
+DELIMITER ;
+
+
+
+use modelonotas7;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_docentes`(
+ IN _ceduladocente bigint,
+ IN _nombresdocente varchar(30),
+ IN _apellidosdocente varchar(30),
+ IN _emaildocente varchar(30)
+)
+BEGIN
+ update docentes set nombresdocente = _nombresdocente,apellidosdocente=_apellidosdocente,emaildocente=_emaildocente where ceduladocente=_ceduladocente;
+END$$
+DELIMITER ;

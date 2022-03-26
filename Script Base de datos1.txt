@@ -1,0 +1,42 @@
+drop database modelonotas7;
+create database modelonotas7;
+use modelonotas7;
+CREATE TABLE Docentes (
+ceduladocente bigint PRIMARY KEY,
+nombresdocente VARCHAR(30) NOT NULL,
+apellidosdocente VARCHAR(30) NOT NULL,
+emaildocente VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE Estudiantes (
+codigoestudiante bigint PRIMARY KEY,
+nombreestudiante VARCHAR(30) NOT NULL,
+apellidosestudiante VARCHAR(30) NOT NULL,
+fechanacimiento DATE NOT NULL,
+generoestudiante VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE Materias (
+codigomateria varchar(20) PRIMARY KEY,
+nombremateria VARCHAR(30) NOT NULL,
+creditosmateria integer NOT NULL
+);
+
+CREATE TABLE Notas (
+consecutivonota bigint AUTO_INCREMENT primary key,
+estudiantenota bigint NOT NULL,
+materianota varchar(20) NOT NULL,
+docentenota bigint NOT NULL,
+valornota float NOT NULL,
+foreign key (estudiantenota) references Estudiantes(codigoestudiante),
+foreign key (docentenota) references Docentes(ceduladocente),
+foreign key (materianota) references Materias(codigomateria) 
+);
+
+use modelonotas7;
+insert into docentes (ceduladocente,nombresdocente,apellidosdocente,emaildocente) values (123456,'Luis Carlos ','Perez Torres','luisperez@libertadores.edu.co' );
+
+insert into docentes (ceduladocente,nombresdocente,apellidosdocente,emaildocente) values (987654,'Ana Rosa ','Pulido Serna','anarosa@libertadores.edu.co' );
+
+insert into docentes (ceduladocente,nombresdocente,apellidosdocente,emaildocente) values (123654,'Oscar Julian ','Almanza','almanza@libertadores.edu.co' );
+
